@@ -5,8 +5,6 @@ import {ScheduleEntry} from "../services/tvService";
 import {CountdownPipe} from '../pipes/countdown';
 import {ElementRef} from "angular2/core";
 
-declare var jQuery:any;
-
 @Component({
     selector: 'bjoctv-app',
     templateUrl: 'app/components/app.html',
