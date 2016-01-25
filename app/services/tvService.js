@@ -35,22 +35,49 @@ System.register(['angular2/core', 'rxjs/Rx', "angular2/http", "angular2/core"], 
                     setInterval(function () { return _this.checkSchedule(); }, 10000);
                 }
                 TvService.prototype.entryEq = function (x, y) {
-                    return (x.url == y.url && x.starts == y.starts);
+                    return (x.starts == y.starts);
                 };
                 TvService.prototype.checkSchedule = function () {
                     var _this = this;
                     console.log('check schedule');
                     this.http.get('data/schedule.json?ts=' + new Date().getTime()).map(function (res) { return res.json(); }).subscribe(function (xs) {
                         var now = new Date().getTime();
+                        var key = localStorage.getItem("key");
+                        if (key == null) {
+                            key = prompt("Enter key:");
+                            localStorage.setItem("key", key);
+                        }
                         var np = xs.filter(function (x) { return now <= (x.starts + x.duration) && now >= x.starts; })[0];
                         if (np != null && (_this.curNp == null || !_this.entryEq(_this.curNp, np))) {
-                            console.log('emit new np');
+                            console.log('emit np');
+                            np.title = CryptoJS.AES.decrypt(np.title, key).toString(CryptoJS.enc.Utf8);
+                            if (np.title.length == 0) {
+                                localStorage.removeItem("key");
+                                return;
+                            }
+                            np.url = CryptoJS.AES.decrypt(np.url, key).toString(CryptoJS.enc.Utf8);
+                            ;
+                            if (np.url.length == 0) {
+                                localStorage.removeItem("key");
+                                return;
+                            }
                             _this.curNp = np;
                             _this.onNewPlaying.emit(np);
                         }
                         var next = xs.filter(function (x) { return x.starts > now; }).sort(function (x, y) { return x.starts - y.starts; })[0];
                         if (next != null && (_this.curNext == null || !_this.entryEq(_this.curNext, next))) {
-                            console.log('emit new next');
+                            console.log('emit next');
+                            next.title = CryptoJS.AES.decrypt(next.title, key).toString(CryptoJS.enc.Utf8);
+                            if (next.title.length == 0) {
+                                localStorage.removeItem("key");
+                                return;
+                            }
+                            next.url = CryptoJS.AES.decrypt(next.url, key).toString(CryptoJS.enc.Utf8);
+                            ;
+                            if (next.url.length == 0) {
+                                localStorage.removeItem("key");
+                                return;
+                            }
                             _this.curNext = next;
                             _this.onNewNext.emit(next);
                         }
