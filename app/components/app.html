@@ -1,0 +1,18 @@
+<div id="root-container">
+    <div id="main-container">
+        <div id="vid-container" *ngIf="np != null">
+            <p id="vid-title">{{np.title}}</p>
+            <video id="vid" autoplay="autoplay" controls="true" (loadedmetadata)="onVideoLoad($event)" (ended)="onVideoEnd($event)" src="{{np.url}}"></video>
+        </div>
+        <div id="next-container" *ngIf="np == null">
+            <p *ngIf="next == null"><img src="img/feelsbadman.png"/> Nothing scheduled <img src="img/feelsbadman.png"/></p>
+            <p *ngIf="next != null">
+                {{next.title}} <br/>
+                <img src="img/burself.png"/> Starts in {{ttn | countdown}} <img src="img/burself.png"/>
+            </p>
+        </div>
+    </div>
+    <div id="chat-container">
+        <iframe src="//twitch.tv/reckful/chat"></iframe>
+    </div>
+</div>

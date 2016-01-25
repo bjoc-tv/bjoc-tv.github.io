@@ -1,0 +1,68 @@
+#root-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right : 0;
+    bottom: 0;
+
+    color: #d2d2d2;
+}
+
+#main-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: calc(100% - 350px);
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    background: #141414;
+}
+
+#chat-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 350px;
+    height: 100%;
+
+    background: #141414;
+}
+
+#chat-container > iframe {
+    width: 100%;
+    height: 100%;
+}
+
+#vid-container {
+    padding-top: 20px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+#vid {
+    width: 100%;
+}
+
+#vid-title {
+    text-align: center;
+}
+
+#next-container {
+}
+
+#next-container > p {
+    text-align: center;
+    margin-top: 300px;
+    font-size: 40px;
+}
+
+#vid-outofsync {
+    color: red;
+    text-align: center;
+}
+
+#vid-outofsync > button {
+    color: black;
+}
